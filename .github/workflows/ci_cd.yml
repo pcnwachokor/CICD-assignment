@@ -47,9 +47,8 @@ jobs:
   deploy:
     name: Deploy & Push to Docker Hub
     needs: [backend_flask]
-    runs-on: ubuntu-latest
-    # Important step - add your environment name
-      environment: TEST
+    runs-on: ubuntu-latest\
+    environment: TEST
     steps:
       - uses: actions/checkout@v3
 
@@ -57,32 +56,13 @@ jobs:
       - name: List repository files
         run: ls -al
 
-    # Step 7: Build docker image
-    # Go to dockerhub.com
-    # Create a new repository - backend_flask
-    # Create a new access token - <access_token>
-    # Note down your username - <username>
-    # Add the following secrets to your GitHub repository - Environment (name = TEST)
-    # add the Environment name to the deploy job above (important step)
-    # https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions
-    ####
       - name: Build Docker Image
-          run: |
-            docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend_flask:latest .
-            # make sure that your dockerhub repo name matches as this line 
-            (backend_flask)
+        run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend_flask:latest .
+        # Ensure that your Docker Hub repository name matches the tag (backend_flask)
 
-
-    # Step 8: # Log in to Docker Hub
-    ####
       - name: Log in to Docker Hub
-          run: echo "${{ secrets.DOCKERHUB_ACCESS_TOKEN }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        run: echo "${{ secrets.DOCKERHUB_ACCESS_TOKEN }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
-
-
-
-    # Step 8: Push docker image to dockerhub
-    ####
-      # Push the Docker image to Docker Hub
-        - name: Push Docker Image
-          run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend_flask:latest
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend_flask:latest
