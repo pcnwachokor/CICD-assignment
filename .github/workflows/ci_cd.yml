@@ -47,7 +47,7 @@ jobs:
   deploy:
     name: Deploy & Push to Docker Hub
     needs: [backend_flask]
-    runs-on: ubuntu-latest\
+    runs-on: ubuntu-latest
     environment: TEST
     steps:
       - uses: actions/checkout@v3
