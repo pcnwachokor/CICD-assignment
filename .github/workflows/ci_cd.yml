@@ -52,14 +52,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Optional: List repository files to verify the docker-compose file exists
       - name: List repository files
         run: ls -al
 
       - name: Build Docker Image
         run: |
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend_flask:latest .
-        # Ensure that your Docker Hub repository name matches the tag (backend_flask)
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend_flask:latest .
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKERHUB_ACCESS_TOKEN }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
